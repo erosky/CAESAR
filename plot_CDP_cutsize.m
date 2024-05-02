@@ -28,9 +28,6 @@ function out = plot_CDP_cutsize(ncfile)
     time_ref = split(flightdate, "/");
     time = datetime(str2double(time_ref{3}),str2double(time_ref{1}),str2double(time_ref{2})) + seconds(time(:,1));
     
-    function mypostcallback(obj,evd,AX)
-        datetick('x', 'keeplimits'); % update dateticks on the 1st axis
-    end
     
     %Make figure
     figure(1);
@@ -42,6 +39,7 @@ function out = plot_CDP_cutsize(ncfile)
     yyaxis left
     plot(datenum(time), H2o_pic1, "DisplayName", "Picarro 1 H20 (ppmv)", "Color","g", "LineStyle", "-", "LineWidth", 2); hold on
     ylabel('H2O (ppmv)');
+        xticks('auto')
     datetick('x')
     xlabel('Time (s)')
     legend

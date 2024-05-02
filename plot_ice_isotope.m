@@ -39,6 +39,7 @@ function out = plot_ice_isotope(ncfile)
     plot(datenum(time), hvps, "DisplayName", "HVPS (100um - 10mm)", "Color","g", "LineStyle", "-","LineWidth", 2);hold on
         plot(datenum(time), conc_2ds, "DisplayName", "2DS (10 - 1000 um)", "Color","c", "LineStyle", "-"); hold on 
     ylabel('HVPS particle counts');
+        xticks('auto')
 
     yyaxis right
     %plot(datenum(time), conc_cdp, "DisplayName", "CDP (5 - 35 um)", "Color","b", "LineStyle", "-"); hold on
