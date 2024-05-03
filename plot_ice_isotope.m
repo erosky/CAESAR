@@ -1,5 +1,6 @@
 function out = plot_ice_isotope(ncfile)
     %Plot a time series of CDP DSDs from SPICULE
+    datetime.setDefaultFormats('default','HH:mm:ss (yyyy-MM-dd)')
     
     %Get water data from the netCDF file
     time = ncread(ncfile,'Time');
@@ -36,9 +37,9 @@ function out = plot_ice_isotope(ncfile)
     %Ice habits
     ax1 = nexttile;
     yyaxis left
-    plot(datenum(time), hvps, "DisplayName", "HVPS (100um - 10mm)", "Color","g", "LineStyle", "-","LineWidth", 2);hold on
-        plot(datenum(time), conc_2ds, "DisplayName", "2DS (10 - 1000 um)", "Color","c", "LineStyle", "-"); hold on 
-    ylabel('HVPS particle counts');
+    p1 = plot(datenum(time), hvps, "DisplayName", "HVPS (100um - 10mm)", "Color","g", "LineStyle", "-","LineWidth", 2);hold on
+    p2 = plot(datenum(time), conc_2ds, "DisplayName", "2DS (10 - 1000 um)", "Color","c", "LineStyle", "-"); hold on 
+    ylabel('OAP particle counts');
         xticks('auto')
 
     yyaxis right
@@ -48,16 +49,22 @@ function out = plot_ice_isotope(ncfile)
 
     datetick('x');
     grid on
-    xlabel('Time (s)')
+    xlabel('Time')
     legend();
     title([flightnumber ' ' flightdate]);
+    
+    datatipRow = dataTipTextRow('UTC',time);
+    p1.DataTipTemplate.DataTipRows(end+1) = datatipRow;
+    p2.DataTipTemplate.DataTipRows(end+1) = datatipRow;
     
     %isotopes
     ax2 = nexttile;
     yyaxis left
-    plot(datenum(time), dD_1, "DisplayName", "dD (CVI)", "Color","r", "LineStyle", "-"); hold on
+    p3 = plot(datenum(time), dD_1, "DisplayName", "dD (CVI)", "Color","r", "LineStyle", "-"); hold on
     plot(datenum(time), d180_1, "DisplayName", "d180 (CVI)", "Color","g", "LineStyle", "-"); hold on
     ylabel('Condensate isotopic signal');
+    
+    p3.DataTipTemplate.DataTipRows(end+1) = datatipRow;
 
     % yyaxis right
     % plot(datenum(time), dD_2, "DisplayName", "dD (SDI)", "Color","m", "LineStyle", "-","LineWidth", 2);hold on
@@ -66,18 +73,20 @@ function out = plot_ice_isotope(ncfile)
     % ylabel('Total water isotopic signature');
     
     datetick('x')
-    xlabel('Time (s)')
+    xlabel('Time')
     legend
     grid on
 
     ax3 = nexttile;
     yyaxis left
-    plot(datenum(time), altitude, "DisplayName", "Altitude (m)", "Color","g", "LineStyle", "-","LineWidth", 2);hold on
+    p5 = plot(datenum(time), altitude, "DisplayName", "Altitude (m)", "Color","g", "LineStyle", "-","LineWidth", 2);hold on
     ylabel('Flight Altitude');
+    
+    p5.DataTipTemplate.DataTipRows(end+1) = datatipRow;
 
     datetick('x');
     grid on
-    xlabel('Time (s)')
+    xlabel('Time')
     legend();
     title([flightnumber ' ' flightdate]);
     
